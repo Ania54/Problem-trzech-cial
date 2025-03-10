@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ApplyForce : MonoBehaviour
 {
-	readonly float G = 81 * 6.6743e-11f;
+	readonly float G = 10e8f * 6.6743e-11f;
 	public float accel = 50;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
