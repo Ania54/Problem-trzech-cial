@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9091289372216030535}
   - component: {fileID: 7267921066882502929}
   - component: {fileID: 5153902130223998313}
+  - component: {fileID: 3387707183718841876}
   - component: {fileID: -2389656785124614941}
   m_Layer: 0
   m_Name: Body
@@ -118,6 +119,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &3387707183718841876
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607831457572164738}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-2389656785124614941
 MonoBehaviour:
   m_ObjectHideFlags: 0
