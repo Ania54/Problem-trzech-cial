@@ -21,7 +21,7 @@ public class SetChildrenColours : MonoBehaviour
 				{
 					if (grandchild.TryGetComponent<TrailRenderer>(out var grandchildTrailRenderer))
 					{
-						grandchildTrailRenderer.startColor = Color.HSVToRGB(child.GetSiblingIndex() / (float)child.childCount, 1, 1);
+						grandchildTrailRenderer.startColor = Color.HSVToRGB(child.GetSiblingIndex() / (float)transform.childCount, 1, 1);
 						grandchildTrailRenderer.endColor = new Color(0, 0, 0, 0);
 					}
 				}

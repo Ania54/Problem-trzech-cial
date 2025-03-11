@@ -25,7 +25,5 @@ public class FpsCounter : MonoBehaviour
 
 		// Draw the FPS label in the upper-left corner
 		GUI.Label(new Rect(10, 10, 100, 25), text, style);
-		// Draw debug label below
-		// GUI.Label(new Rect(10, 40, 100, 25), 216.ToString(), style);
 	}
 }

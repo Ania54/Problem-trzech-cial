@@ -405,6 +405,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 607831457572164738, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1367822008106992071, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.5
@@ -451,7 +455,7 @@ PrefabInstance:
       objectReference: {fileID: 249801459}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_VersionIndex
-      value: 276
+      value: 279
       objectReference: {fileID: 0}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_Tangents.Array.data[6].y
@@ -609,7 +613,7 @@ PrefabInstance:
       objectReference: {fileID: 1571813162}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_VersionIndex
-      value: 258
+      value: 261
       objectReference: {fileID: 0}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_Tangents.Array.data[6].y
@@ -911,7 +915,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -969,6 +973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6
   mouseSensitivity: 72
+  bodyContainer: {fileID: 732409302}
 --- !u!43 &1571813162
 Mesh:
   m_ObjectHideFlags: 0
@@ -1180,7 +1185,7 @@ PrefabInstance:
       objectReference: {fileID: 1983417179}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_VersionIndex
-      value: 276
+      value: 279
       objectReference: {fileID: 0}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_Tangents.Array.data[6].y
