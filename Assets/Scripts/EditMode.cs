@@ -13,4 +13,12 @@ public class EditMode : MonoBehaviour
     {
         
     }
+
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(20,40,80,20), "Start"))
+        {
+            
+        }
+    }
 }
