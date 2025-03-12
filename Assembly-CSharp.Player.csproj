@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{309C1D46-4892-1B2B-7645-9B6649573B3B}</ProjectGuid>
+    <ProjectGuid>{87D24E08-C452-3A68-CDE2-8187D1B5F575}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -62,9 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\FpsCounter.cs" />
-    <Compile Include="Assets\Scripts\DebugCamMove.cs" />
-    <Compile Include="Assets\Scripts\DebugCamRot.cs" />
+    <Compile Include="Assets\Scripts\CamControl.cs" />
     <Compile Include="Assets\Scripts\ApplyForce.cs" />
+    <Compile Include="Assets\Scripts\EditMode.cs" />
     <Compile Include="Assets\Scripts\SetChildrenColours.cs" />
   </ItemGroup>
   <ItemGroup>
