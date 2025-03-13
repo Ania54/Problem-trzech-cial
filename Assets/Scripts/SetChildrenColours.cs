@@ -3,29 +3,29 @@ using UnityEngine;
 public class SetChildrenColours : MonoBehaviour
 {
 
-    void Start()
-    {
-        ChangeColourOfChildren();
-    }
+	private void Start()
+	{
+		ChangeColourOfChildren();
+	}
 
-    void ChangeColourOfChildren()
-    {
-        foreach (Transform child in transform)
-        {
-            if (child.TryGetComponent<Renderer>(out var renderer))
-            {
+	private void ChangeColourOfChildren()
+	{
+		foreach (Transform child in transform)
+		{
+			if (child.TryGetComponent(out Renderer renderer))
+			{
 				// hsv colour
-                renderer.material.color = Color.HSVToRGB(child.GetSiblingIndex() / (float)transform.childCount, 1, 1);
+				renderer.material.color = Color.HSVToRGB(child.GetSiblingIndex() / (float)transform.childCount, 1, 1);
 				// also recolour children's children
 				foreach (Transform grandchild in child)
 				{
-					if (grandchild.TryGetComponent<TrailRenderer>(out var grandchildTrailRenderer))
+					if (grandchild.TryGetComponent(out TrailRenderer grandchildTrailRenderer))
 					{
 						grandchildTrailRenderer.startColor = Color.HSVToRGB(child.GetSiblingIndex() / (float)transform.childCount, 1, 1);
 						grandchildTrailRenderer.endColor = new Color(0, 0, 0, 0);
 					}
 				}
-            }
-        }
-    }
+			}
+		}
+	}
 }

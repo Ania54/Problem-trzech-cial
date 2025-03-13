@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Problem-trzech-cial.sln"
+    "dotnet.defaultSolution": "P3C.sln"
 }

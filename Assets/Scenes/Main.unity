@@ -290,7 +290,7 @@ PrefabInstance:
       objectReference: {fileID: 1331709216}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_VersionIndex
-      value: 297
+      value: 318
       objectReference: {fileID: 0}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_Tangents.Array.data[6].y
@@ -448,7 +448,7 @@ PrefabInstance:
       objectReference: {fileID: 1468259870}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_VersionIndex
-      value: 279
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_Tangents.Array.data[6].y
@@ -823,6 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyContainer: {fileID: 732409302}
+  hoverColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1207445424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1308,7 +1309,7 @@ PrefabInstance:
       objectReference: {fileID: 1688688797}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_VersionIndex
-      value: 291
+      value: 312
       objectReference: {fileID: 0}
     - target: {fileID: 4615532042910930937, guid: f5982b1148959b48791b1260d62c97d7, type: 3}
       propertyPath: m_Tangents.Array.data[6].y
