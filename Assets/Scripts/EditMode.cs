@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EditMode : MonoBehaviour
 {
+    public GameObject bodyContainer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,9 +18,13 @@ public class EditMode : MonoBehaviour
 
     void OnGUI()
     {
-        if (GUI.Button(new Rect(20,40,80,20), "Start"))
+        if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 40, 90, 30), "Start"))
         {
-            
+            foreach (Transform child in bodyContainer.transform)
+            {
+                child.GetComponent<ApplyForce>().enabled = true;
+            }
+            enabled = false;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,7 @@ public class CamControl : MonoBehaviour
     public GameObject bodyContainer;
 	private float xRotation = 0f;
 	private int currentMode;
-
+	InputAction jump2DAction;
 	InputAction moveAction;
 	InputAction lookAction;
 	InputAction jumpAction;
@@ -18,11 +19,12 @@ public class CamControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		moveAction = InputSystem.actions.FindAction("Move");
-		lookAction = InputSystem.actions.FindAction("Look");
-		jumpAction = InputSystem.actions.FindAction("Jump");
-		  d2Action = InputSystem.actions.FindAction("2D");
-		  d3Action = InputSystem.actions.FindAction("3D");
+		jump2DAction = InputSystem.actions.FindAction("Jump2D");
+		  moveAction = InputSystem.actions.FindAction("Move");
+		  lookAction = InputSystem.actions.FindAction("Look");
+		  jumpAction = InputSystem.actions.FindAction("Jump");
+		    d2Action = InputSystem.actions.FindAction("2D");
+		    d3Action = InputSystem.actions.FindAction("3D");
 
 		float? childY = null;
 		currentMode = 2;
@@ -72,8 +74,14 @@ public class CamControl : MonoBehaviour
 		switch (currentMode)
 		{
 			case 2:
+				float upDown2D = jump2DAction.ReadValue<float>();
+
+				Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + upDown2D, 5, 15);
+				
+				//theCamera.orthographicSize = Mathf.Clamp(theCamera.orthographicSize + upDown2D, 5, 15);
 
 				transform.Translate(flatMove, Space.World);
+
 				break;
 
 			case 3:
