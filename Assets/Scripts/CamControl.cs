@@ -113,13 +113,9 @@ public class CamControl : MonoBehaviour
 
 	private void OnGUI()
 	{
-		// Set the style for the label
-		GUIStyle style = new() { fontSize = 24 };
-		style.normal.textColor = Color.white;
-
-		string currentModeText = currentMode == 2 ? "Obecny tryb: 2D, naciśnij [3] dla trybu 3D" : "Obecny tryb: 3D, naciśnij [2] dla trybu 2D";
+		string currentModeText = currentMode == 2 ? "Obecny tryb: 2D (naciśnij [3] dla trybu 3D)" : "Obecny tryb: 3D (naciśnij [2] dla trybu 2D)";
 
 		// Draw the label in the lower-left corner
-		GUI.Label(new Rect(10, Screen.height - 30, 100, 25), currentModeText, style);
+		GUI.Label(new Rect(10, Screen.height - 40, 100, 30), currentModeText);
 	}
 }

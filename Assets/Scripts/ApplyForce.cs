@@ -29,7 +29,7 @@ public class ApplyForce : MonoBehaviour
 
 	private void OnGUI()
 	{
-		if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 40, 90, 30), "Stop"))
+		if (GUI.Button(new Rect(Screen.width - 110, Screen.height - 50, 100, 40), "Stop"))
 		{
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}

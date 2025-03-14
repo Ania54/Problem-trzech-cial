@@ -16,11 +16,9 @@ public class FpsCounter : MonoBehaviour
 		float fps = 1.0f / deltaTime;
 		string text = string.Format("{0:0.} FPS", fps);
 
-		// Set the style for the label
-		GUIStyle style = new() { fontSize = 24 };
-		style.normal.textColor = Color.white;
-
-		// Draw the FPS label in the upper-left corner
-		GUI.Label(new Rect(10, 10, 100, 25), text, style);
+		GUI.skin.label.fontSize = 24;
+		GUI.skin.label.clipping = TextClipping.Overflow;
+		GUI.skin.label.wordWrap = false;
+		GUI.Label(new Rect(10, 10, 100, 25), text);
 	}
 }

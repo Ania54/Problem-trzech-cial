@@ -42,16 +42,12 @@ public class EditMode : MonoBehaviour
 	}
 	private void OnGUI()
 	{
-		// Set the style
-		GUIStyle style = new() { fontSize = 24 };
-		style.normal.textColor = Color.white;
-
-		if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 40, 90, 30), "Start", style))
+		if (GUI.Button(new Rect(Screen.width - 110, Screen.height - 50, 100, 40), "Start"))
 		{
 			foreach (Transform child in bodyContainer.transform) { child.GetComponent<ApplyForce>().enabled = true; }
 			enabled = false;
 		}
 		// show a label on the right side of the screen
-		GUI.Label(new Rect(Screen.width - 100, 10, 90, 30), "Zaznaczone ciało", style);
+		GUI.Label(new Rect(Screen.width - 210, 10, 200, 30), "Zaznaczone ciało");
 	}
 }
