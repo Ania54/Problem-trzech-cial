@@ -19,6 +19,11 @@ public class FpsCounter : MonoBehaviour
 		GUI.skin.label.fontSize = 24;
 		GUI.skin.label.clipping = TextClipping.Overflow;
 		GUI.skin.label.wordWrap = false;
+
+		GUI.skin.button.fontSize = 18;
+		GUI.skin.button.clipping = TextClipping.Overflow;
+		GUI.skin.button.wordWrap = false;
+
 		GUI.Label(new Rect(10, 10, 100, 25), text);
 	}
 }

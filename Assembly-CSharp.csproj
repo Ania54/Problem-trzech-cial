@@ -69,7 +69,6 @@
     <Compile Include="Assets/Scripts/CamControl.cs" />
     <Compile Include="Assets/Scripts/ApplyForce.cs" />
     <Compile Include="Assets/Scripts/EditMode.cs" />
-    <Compile Include="Assets/Scripts/SetChildrenColours.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
