@@ -16,7 +16,7 @@ public class CamControl : MonoBehaviour
 	private InputAction d3Action;
 
 	// Start is called before the first frame update
-	private void Start()
+	public void Start()
 	{
 		jump2DAction = InputSystem.actions.FindAction("Jump2D");
 		moveAction = InputSystem.actions.FindAction("Move");

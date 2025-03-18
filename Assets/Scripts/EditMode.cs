@@ -6,9 +6,12 @@ public class EditMode : MonoBehaviour
 	public GameObject bodyContainer;
 	public GameObject bodyPrefab;
 	private GameObject hoveredObject;
-	private GameObject selectedObject;
+	private GameObject selBody;
 	private InputAction mousePositionAction;
 	private InputAction mouseClickAction;
+	private string[] strings;
+	private string[] newStrings;
+	private float tempFloat;
 
 	private void Start()
 	{
@@ -30,11 +33,23 @@ public class EditMode : MonoBehaviour
 				if (mouseClickAction.WasPressedThisFrame())
 				{
 					// Only update selection if a new object is clicked.
-					if (selectedObject != hitObject)
+					if (selBody != hitObject)
 					{
 						ClearSelection();
-						selectedObject = hitObject;
+						selBody = hitObject;
 						hitRenderer.material.EnableKeyword("_EMISSION");
+
+						strings = new string[8]
+						{
+							selBody.GetComponent<Rigidbody>().mass.ToString(),
+							selBody.transform.position.x.ToString(),
+							selBody.transform.position.y.ToString(),
+							selBody.transform.position.z.ToString(),
+							selBody.transform.rotation.eulerAngles.x.ToString(),
+							selBody.transform.rotation.eulerAngles.y.ToString(),
+							selBody.transform.rotation.eulerAngles.z.ToString(),
+							selBody.GetComponent<ApplyForce>().accel.ToString()
+						};
 					}
 					// Optionally, you might want to deselect when clicking the already selected object:
 					else
@@ -45,7 +60,7 @@ public class EditMode : MonoBehaviour
 				}
 
 				// Handle hover: highlight objects that are not currently selected.
-				if (hitObject != selectedObject && hoveredObject != hitObject)
+				if (hitObject != selBody && hoveredObject != hitObject)
 				{
 					ClearHover();
 					hoveredObject = hitObject;
@@ -63,7 +78,7 @@ public class EditMode : MonoBehaviour
 
 	private void ClearHover()
 	{
-		if (hoveredObject != null && hoveredObject != selectedObject)
+		if (hoveredObject != null && hoveredObject != selBody)
 		{
 			if (hoveredObject.TryGetComponent(out Renderer renderer))
 			{
@@ -75,13 +90,13 @@ public class EditMode : MonoBehaviour
 
 	private void ClearSelection()
 	{
-		if (selectedObject != null)
+		if (selBody != null)
 		{
-			if (selectedObject.TryGetComponent(out Renderer renderer))
+			if (selBody.TryGetComponent(out Renderer renderer))
 			{
 				renderer.material.DisableKeyword("_EMISSION");
 			}
-			selectedObject = null;
+			selBody = null;
 		}
 	}
 
@@ -125,6 +140,7 @@ public class EditMode : MonoBehaviour
 			}
 			ClearHover();
 			ClearSelection();
+			Camera.main.GetComponent<CamControl>().Start();
 			enabled = false;
 		}
 		// add a new object button
@@ -138,7 +154,7 @@ public class EditMode : MonoBehaviour
 			GameObject newBody = Instantiate(bodyPrefab, Vector3.zero, Quaternion.identity, bodyContainer.transform);
 			newBody.name = i.ToString();
 			ClearSelection();
-			selectedObject = newBody;
+			selBody = newBody;
 			newBody.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 		}
 
@@ -147,18 +163,78 @@ public class EditMode : MonoBehaviour
 		{
 
 		}
+		if (GUI.Button(new Rect(120, Screen.height - 90, 100, 40), "4-kąt"))
+		{
 
-		if (selectedObject == null) { return; }
+		}
+		if (GUI.Button(new Rect(230, Screen.height - 90, 100, 40), "4-ścian"))
+		{
+
+		}
+		if (GUI.Button(new Rect(340, Screen.height - 90, 100, 40), "6-ścian"))
+		{
+
+		}
+
+		if (selBody == null) { return; }
 
 		GUI.Label(new Rect(Screen.width - 210, 10, 200, 30),
-		"Zaznaczone ciało:\nnr " + selectedObject.name + "\n\nm[kg] =\n\nPozycja [m]\nX =\nY =\nZ =\n\nObrót [°]\nX =\nY =\nZ =\n\nPrędkość [m/s] =");
+		"Zaznaczone ciało:\nnr " + selBody.name + "\n\nm[kg] =\n\nPozycja [m]\nX =\nY =\nZ =\n\nObrót [°]\nX =\nY =\nZ =\n\nv₀[m/s] =");
 
-		_ = GUI.TextField(new Rect(10, 30, 200, 30), "inputText", 25);
+		newStrings = new string[8]
+		{
+			GUI.TextField(new Rect(Screen.width - 120, 92, 110, 25), strings[0]),
+			GUI.TextField(new Rect(Screen.width - 160, 171, 150, 25), strings[1]),
+			GUI.TextField(new Rect(Screen.width - 160, 197, 150, 25), strings[2]),
+			GUI.TextField(new Rect(Screen.width - 160, 223, 150, 25), strings[3]),
+			GUI.TextField(new Rect(Screen.width - 160, 303, 150, 25), strings[4]),
+			GUI.TextField(new Rect(Screen.width - 160, 329, 150, 25), strings[5]),
+			GUI.TextField(new Rect(Screen.width - 160, 355, 150, 25), strings[6]),
+			GUI.TextField(new Rect(Screen.width - 110, 410, 100, 25), strings[7])
+		};
+		for (int i = 0; i < 8; i++)
+		{
+			if (newStrings[i] != strings[i])
+			{
+				if (newStrings[i] == "") { tempFloat = 0; }
+				else { if (!float.TryParse(newStrings[i], out tempFloat)) { continue; } }
+				switch (i)
+				{
+					case 0:
+						selBody.GetComponent<Rigidbody>().mass = tempFloat;
+						break;
+					case 1:
+						selBody.transform.position = new Vector3(tempFloat, selBody.transform.position.y, selBody.transform.position.z);
+						break;
+					case 2:
+						selBody.transform.position = new Vector3(selBody.transform.position.x, tempFloat, selBody.transform.position.z);
+						break;
+					case 3:
+						selBody.transform.position = new Vector3(selBody.transform.position.x, selBody.transform.position.y, tempFloat);
+						break;
+					case 4:
+						selBody.transform.rotation = Quaternion.Euler(tempFloat, selBody.transform.rotation.eulerAngles.y, selBody.transform.rotation.eulerAngles.z);
+						break;
+					case 5:
+						selBody.transform.rotation = Quaternion.Euler(selBody.transform.rotation.eulerAngles.x, tempFloat, selBody.transform.rotation.eulerAngles.z);
+						break;
+					case 6:
+						selBody.transform.rotation = Quaternion.Euler(selBody.transform.rotation.eulerAngles.x, selBody.transform.rotation.eulerAngles.y, tempFloat);
+						break;
+					case 7:
+						selBody.GetComponent<ApplyForce>().accel = tempFloat;
+						break;
+					default:
+						break;
+				}
+				strings[i] = newStrings[i];
+			}
+		}
 
 		// remove the selected object button
-		if (GUI.Button(new Rect(Screen.width - 110, 45, 100, 40), "Usuń ciało"))
+		if (GUI.Button(new Rect(Screen.width - 110, 43, 100, 40), "Usuń ciało"))
 		{
-			Destroy(selectedObject);
+			Destroy(selBody);
 			ClearHover();
 			ClearSelection();
 		}
