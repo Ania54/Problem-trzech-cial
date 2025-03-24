@@ -9,17 +9,23 @@ public class EditMode : MonoBehaviour
 	private GameObject selBody;
 	private InputAction mousePositionAction;
 	private InputAction mouseClickAction;
+	private InputAction startAction;
 	private string[] strings;
 	private string[] newStrings;
 	private float tempFloat;
+	private GameObject draggingObject = null;
+	private Vector3 offset;
+	private float zDepth;
 
 	private void Start()
 	{
 		mousePositionAction = InputSystem.actions.FindAction("MousePosition");
 		mouseClickAction = InputSystem.actions.FindAction("MouseClick");
+		startAction = InputSystem.actions.FindAction("Attack");
 		ChangeColourOfChildren();
 	}
 
+	// selecting objects
 	private void Update()
 	{
 		// Get the ray from the current mouse position
@@ -33,7 +39,7 @@ public class EditMode : MonoBehaviour
 				if (mouseClickAction.WasPressedThisFrame())
 				{
 					// Only update selection if a new object is clicked.
-					if (selBody != hitObject)
+					if (hitObject != selBody)
 					{
 						ClearSelection();
 						selBody = hitObject;
@@ -50,8 +56,13 @@ public class EditMode : MonoBehaviour
 							selBody.transform.rotation.eulerAngles.z.ToString(),
 							selBody.GetComponent<ApplyForce>().accel.ToString()
 						};
+
+						// Prepare for dragging
+						draggingObject = selBody;
+						zDepth = Camera.main.WorldToScreenPoint(draggingObject.transform.position).z;
+						offset = draggingObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(mousePositionAction.ReadValue<Vector2>().x, mousePositionAction.ReadValue<Vector2>().y, zDepth));
 					}
-					// Optionally, you might want to deselect when clicking the already selected object:
+					// Optionally, deselect when clicking the already selected object:
 					else
 					{
 						ClearSelection();
@@ -73,6 +84,20 @@ public class EditMode : MonoBehaviour
 			// No object is hit by the ray, so clear the hover effect.
 			ClearHover();
 		}
+
+		// Handle dragging
+		if (draggingObject != null && mouseClickAction.IsPressed())
+		{
+			Vector3 newMousePosition = new(mousePositionAction.ReadValue<Vector2>().x, mousePositionAction.ReadValue<Vector2>().y, zDepth);
+			draggingObject.transform.position = Camera.main.ScreenToWorldPoint(newMousePosition) + offset;
+		}
+		else if (mouseClickAction.WasReleasedThisFrame())
+		{
+			draggingObject = null;
+			ClearSelection();
+			ClearHover();
+		}
+
 		ChangeColourOfChildren();
 	}
 
@@ -80,10 +105,7 @@ public class EditMode : MonoBehaviour
 	{
 		if (hoveredObject != null && hoveredObject != selBody)
 		{
-			if (hoveredObject.TryGetComponent(out Renderer renderer))
-			{
-				renderer.material.DisableKeyword("_EMISSION");
-			}
+			if (hoveredObject.TryGetComponent(out Renderer renderer)) { renderer.material.DisableKeyword("_EMISSION"); }
 			hoveredObject = null;
 		}
 	}
@@ -92,10 +114,7 @@ public class EditMode : MonoBehaviour
 	{
 		if (selBody != null)
 		{
-			if (selBody.TryGetComponent(out Renderer renderer))
-			{
-				renderer.material.DisableKeyword("_EMISSION");
-			}
+			if (selBody.TryGetComponent(out Renderer renderer)) { renderer.material.DisableKeyword("_EMISSION"); }
 			selBody = null;
 		}
 	}
@@ -123,13 +142,18 @@ public class EditMode : MonoBehaviour
 
 	private void OnGUI()
 	{
-		if (GUI.Button(new Rect(Screen.width - 110, Screen.height - 50, 100, 40), "Start"))
+		if (GUI.Button(new Rect(Screen.width - 110, Screen.height - 50, 100, 40), "Start") || startAction.WasPressedThisFrame())
 		{
 			foreach (Transform child in bodyContainer.transform)
 			{
 				foreach (Transform grandchild in child.transform)
 				{
-					if (!grandchild.CompareTag("TheTrail"))
+					if (grandchild.CompareTag("TheTrail"))
+					{
+						// enable the grandchild object
+						grandchild.gameObject.SetActive(true);
+					}
+					else
 					{
 						// disable the grandchild object
 						grandchild.gameObject.SetActive(false);
@@ -196,8 +220,12 @@ public class EditMode : MonoBehaviour
 		{
 			if (newStrings[i] != strings[i])
 			{
-				if (newStrings[i] == "") { tempFloat = 0; }
-				else { if (!float.TryParse(newStrings[i], out tempFloat)) { continue; } }
+				if (newStrings[i] is "" or "-") { tempFloat = 0; }
+				else
+				{
+					if (newStrings[i].Contains(",")) { newStrings[i] = newStrings[i].Replace(",", "."); }
+					if (!float.TryParse(newStrings[i], out tempFloat)) { continue; }
+				}
 				switch (i)
 				{
 					case 0:

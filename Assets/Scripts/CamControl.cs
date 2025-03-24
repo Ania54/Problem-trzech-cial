@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class CamControl : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class CamControl : MonoBehaviour
 	private InputAction jumpAction;
 	private InputAction d2Action;
 	private InputAction d3Action;
+	private InputAction startAction;
 
 	// Start is called before the first frame update
 	public void Start()
@@ -24,6 +26,7 @@ public class CamControl : MonoBehaviour
 		jumpAction = InputSystem.actions.FindAction("Jump");
 		d2Action = InputSystem.actions.FindAction("2D");
 		d3Action = InputSystem.actions.FindAction("3D");
+		startAction = InputSystem.actions.FindAction("Attack");
 
 		float? childY = null;
 		currentMode = 2;
@@ -117,5 +120,13 @@ public class CamControl : MonoBehaviour
 
 		// Draw the label in the lower-left corner
 		GUI.Label(new Rect(10, Screen.height - 40, 100, 30), currentModeText);
+
+		// if the first body has the ApplyForce script disabled
+		if (!bodyContainer.transform.GetChild(0).GetComponent<ApplyForce>().enabled) { return; }
+
+		if (GUI.Button(new Rect(Screen.width - 110, Screen.height - 50, 100, 40), "Stop") || startAction.WasPressedThisFrame())
+		{
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		}
 	}
 }
