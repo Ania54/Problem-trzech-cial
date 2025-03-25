@@ -93,6 +93,10 @@ public class EditMode : MonoBehaviour
 		{
 			draggingObject = null;
 		}
+		if (rightClickAction.WasPressedThisFrame())
+		{
+			zDepth = Camera.main.WorldToScreenPoint(selBody.transform.position).z;
+		}
 		if (rightClickAction.ReadValue<float>() > 0 && selBody != null)
 		{
 			// Look at the mouse
@@ -228,34 +232,30 @@ public class EditMode : MonoBehaviour
 		}
 
 		// presets
-		if (GUI.Button(new Rect(10, Screen.height - 90, 100, 40), "Puste"))
+		if (GUI.Button(new Rect(10, Screen.height - 140, 100, 40), "Puste"))
 		{
 			ClearBodies();
 		}
-		if (GUI.Button(new Rect(120, Screen.height - 90, 100, 40), "2 ciała"))
+		if (GUI.Button(new Rect(10, Screen.height - 90, 100, 40), "2 ciała"))
 		{
 			ClearBodies();
 			NewBody(03, 0, 0, 0, 000, 0, 100, 30);
 			NewBody(-3, 0, 0, 0, 180, 0, 100, 30);
 		}
-		if (GUI.Button(new Rect(230, Screen.height - 90, 100, 40), "3-kąt"))
+		if (GUI.Button(new Rect(120, Screen.height - 90, 100, 40), "3-kąt"))
 		{
 			ClearBodies();
 			NewBody(00003, 0, 00000000000000000000000000, 0, 000, 0, 100, 50);
 			NewBody(-1.5f, 0, 03 * Mathf.Pow(3, .5f) / 2, 0, 240, 0, 100, 50);
 			NewBody(-1.5f, 0, -3 * Mathf.Pow(3, .5f) / 2, 0, 120, 0, 100, 50);
 		}
-		if (GUI.Button(new Rect(340, Screen.height - 90, 100, 40), "4-kąt"))
+		if (GUI.Button(new Rect(230, Screen.height - 90, 100, 40), "4-kąt"))
 		{
 			ClearBodies();
 			NewBody(03, 0, -3, 0, 000, 0, 100, 50);
 			NewBody(03, 0, 03, 0, 090, 0, 100, 50);
 			NewBody(-3, 0, 03, 0, 180, 0, 100, 50);
 			NewBody(-3, 0, -3, 0, 270, 0, 100, 50);
-		}
-		if (GUI.Button(new Rect(10, Screen.height - 140, 100, 40), "4-ścian"))
-		{
-			ClearBodies();
 		}
 		if (GUI.Button(new Rect(120, Screen.height - 140, 100, 40), "6-ścian"))
 		{

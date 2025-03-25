@@ -8,6 +8,7 @@ public class CamControl : MonoBehaviour
 	public float moveSpeed = 6f;
 	public float mouseSensitivity = 72f;
 	public GameObject bodyContainer;
+	public GameObject crosshair;
 	private float xRotation = 0f;
 	public int currentMode;
 	private InputAction jump2DAction;
@@ -129,6 +130,9 @@ public class CamControl : MonoBehaviour
 
 		// Draw the label in the lower-left corner
 		GUI.Label(new Rect(10, Screen.height - 40, 100, 30), currentModeText);
+
+		if (currentMode == 3) { crosshair.SetActive(true); }
+		else { crosshair.SetActive(false); }
 
 		// if the first body has the ApplyForce script disabled or there are no bodies
 		if (bodyContainer.transform.childCount == 0) { return; }
