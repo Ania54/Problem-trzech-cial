@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -8,7 +9,7 @@ public class CamControl : MonoBehaviour
 	public float mouseSensitivity = 72f;
 	public GameObject bodyContainer;
 	private float xRotation = 0f;
-	private int currentMode;
+	public int currentMode;
 	private InputAction jump2DAction;
 	private InputAction moveAction;
 	private InputAction lookAction;
@@ -16,6 +17,9 @@ public class CamControl : MonoBehaviour
 	private InputAction d2Action;
 	private InputAction d3Action;
 	private InputAction startAction;
+	private float startTime;
+	private float cameraSpeed;
+	private float timeMultiplier;
 
 	// Start is called before the first frame update
 	public void Start()
@@ -30,6 +34,8 @@ public class CamControl : MonoBehaviour
 
 		float? childY = null;
 		currentMode = 2;
+		cameraSpeed = 1;
+		timeMultiplier = 1;
 		// check if y coordinates of all children are equal
 		foreach (Transform child in bodyContainer.transform)
 		{
@@ -44,6 +50,8 @@ public class CamControl : MonoBehaviour
 				break;
 			}
 		}
+
+		startTime = Time.time;
 	}
 
 	// Update is called once per frame
@@ -78,11 +86,12 @@ public class CamControl : MonoBehaviour
 			case 2:
 				float upDown2D = jump2DAction.ReadValue<float>();
 
-				Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + upDown2D, 5, 15);
+				Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + upDown2D, 3, 15);
+				cameraSpeed = Mathf.Clamp((5 * cameraSpeed) + upDown2D, 3, 15) / 5;
 
 				//theCamera.orthographicSize = Mathf.Clamp(theCamera.orthographicSize + upDown2D, 5, 15);
 
-				transform.Translate(flatMove, Space.World);
+				transform.Translate(cameraSpeed * flatMove, Space.World);
 
 				break;
 
@@ -121,12 +130,20 @@ public class CamControl : MonoBehaviour
 		// Draw the label in the lower-left corner
 		GUI.Label(new Rect(10, Screen.height - 40, 100, 30), currentModeText);
 
-		// if the first body has the ApplyForce script disabled
+		// if the first body has the ApplyForce script disabled or there are no bodies
+		if (bodyContainer.transform.childCount == 0) { return; }
 		if (!bodyContainer.transform.GetChild(0).GetComponent<ApplyForce>().enabled) { return; }
 
-		if (GUI.Button(new Rect(Screen.width - 110, Screen.height - 50, 100, 40), "Stop") || startAction.WasPressedThisFrame())
+		// if has been running for more than 1/2 seconds
+		if ((GUI.Button(new Rect(Screen.width - 110, Screen.height - 50, 100, 40), "Stop [enter]") || startAction.WasPressedThisFrame()) && Time.time - startTime > 0.5f)
 		{
+			Cursor.lockState = CursorLockMode.None;
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
+
+		timeMultiplier = (float)Math.Round(GUI.HorizontalSlider(new Rect(Screen.width - 125, 50, 100, 30), timeMultiplier, 0.5f, 2f), 1);
+		GUI.Label(new Rect(Screen.width - 265, 10, 100, 30), $"Prędkość symulacji: {timeMultiplier}x");
+		Time.timeScale = timeMultiplier;
+		Time.fixedDeltaTime = Time.timeScale * 0.02f;
 	}
 }

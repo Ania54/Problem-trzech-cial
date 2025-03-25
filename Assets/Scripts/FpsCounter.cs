@@ -13,7 +13,7 @@ public class FpsCounter : MonoBehaviour
 	private void OnGUI()
 	{
 		// Calculate FPS
-		float fps = 1.0f / deltaTime;
+		float fps = 1.0f / deltaTime * Time.timeScale;
 		string text = string.Format("{0:0.} FPS", fps);
 
 		GUI.skin.label.fontSize = 24;
@@ -23,6 +23,8 @@ public class FpsCounter : MonoBehaviour
 		GUI.skin.button.fontSize = 18;
 		GUI.skin.button.clipping = TextClipping.Overflow;
 		GUI.skin.button.wordWrap = false;
+
+		GUI.skin.toggle.fontSize = 18;
 
 		GUI.skin.textField.fontSize = 18;
 
