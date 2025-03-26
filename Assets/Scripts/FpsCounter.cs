@@ -16,7 +16,7 @@ public class FpsCounter : MonoBehaviour
 		float fps = 1.0f / deltaTime * Time.timeScale;
 		string text = string.Format("{0:0.} FPS", fps);
 
-		GUI.skin.label.fontSize = 24;
+		GUI.skin.label.fontSize = 23;
 		GUI.skin.label.clipping = TextClipping.Overflow;
 		GUI.skin.label.wordWrap = false;
 
